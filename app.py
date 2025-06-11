@@ -57,21 +57,24 @@ def main():
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
   
-
     if not os.environ.get("MISTRAL_API_KEY"):
-        # Note: getpass won't work in Streamlit as expected, so we need a workaround
-        # Using st.text_input with password=True is more appropriate for Streamlit
         api_key = st.sidebar.text_input("Enter API key for MistralAI:", type="password")
         if api_key:
-            os.environ["MISTRAL_API_KEY"] = api_key   
+            os.environ["MISTRAL_API_KEY"] = api_key
+            
     # Set up the Streamlit app  
     st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":guardsman:", layout="wide")
     st.write(css, unsafe_allow_html=True)
     st.header("Chat with multiple PDFs")
-    user_question = st.text_input("Enter your query here:", key="query_input")
-    if user_question:
-         handle_user_input(user_question)
-
+    
+    # Create a form to prevent auto-submission
+    with st.form(key="query_form"):
+        user_question = st.text_input("Enter your query here:", key="query_input")
+        submit_button = st.form_submit_button("Ask")
+        
+    # Only process when form is submitted
+    if submit_button and user_question:
+        handle_user_input(user_question)
   
 
 
@@ -103,4 +106,3 @@ def main():
     # Add more functionality here as needed
 if __name__ == "__main__":
     main()
-    
