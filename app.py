@@ -52,7 +52,7 @@ def handle_user_input(user_question):
     
 
 def main():
-    # Load environment variables
+
     load_dotenv()
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
@@ -62,17 +62,15 @@ def main():
         if api_key:
             os.environ["MISTRAL_API_KEY"] = api_key
             
-    # Set up the Streamlit app  
+    
     st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":guardsman:", layout="wide")
     st.write(css, unsafe_allow_html=True)
     st.header("Chat with multiple PDFs")
-    
-    # Create a form to prevent auto-submission
+
     with st.form(key="query_form"):
         user_question = st.text_input("Enter your query here:", key="query_input")
         submit_button = st.form_submit_button("Ask")
-        
-    # Only process when form is submitted
+   
     if submit_button and user_question:
         handle_user_input(user_question)
   
