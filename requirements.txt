@@ -1,0 +1,8 @@
+streamlit
+langchain
+langchain-community
+langchain-mistralai
+python-dotenv
+pypdf2
+faiss-cpu
+langchain-perplexity
